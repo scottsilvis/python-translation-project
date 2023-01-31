@@ -28,7 +28,13 @@ def translate_sequence(rna_sequence, genetic_code):
     str
         A string of the translated amino acids.
     """
-    pass
+    str = ""
+    for i in range(0,len(rna_sequence.upper()),3):
+        codon = rna_sequence.upper()[i:i+3] 
+        translation = genetic_code[codon]
+        str = str + translation
+    return str
+        
 
 def get_all_translations(rna_sequence, genetic_code):
     """Get a list of all amino acid sequences encoded by an RNA sequence.
@@ -118,7 +124,17 @@ def reverse_and_complement(sequence):
     >>> reverse_and_complement('AUGC')
     'GCAU'
     """
-    pass
+    str = ""
+    for i in sequence.upper():
+        if i == "A":
+            str = "U" + str
+        elif i == "U":
+            str = "A" + str
+        elif i == "G":
+            str = "C" + str
+        elif i == "C":
+            str = "G" + str
+    return str
 
 def get_longest_peptide(rna_sequence, genetic_code):
     """Get the longest peptide encoded by an RNA sequence.
