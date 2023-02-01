@@ -29,9 +29,15 @@ def translate_sequence(rna_sequence, genetic_code):
         A string of the translated amino acids.
     """
     str = ""
-    for i in range(0,len(rna_sequence.upper()),3):
-        codon = rna_sequence.upper()[i:i+3] 
+    if len(rna_sequence) < 3:
+        return ""
+    for i in range(0,len(rna_sequence),3):
+        codon = rna_sequence.upper()[i:i+3]
+        if len(codon) != 3:
+            break
         translation = genetic_code[codon]
+        if translation == "*":
+            break
         str = str + translation
     return str
         
@@ -67,7 +73,15 @@ def get_all_translations(rna_sequence, genetic_code):
         A list of strings; each string is an sequence of amino acids encoded by
         `rna_sequence`.
     """
-    pass
+    str = ""
+    list = []
+    for i in range(len(rna_sequence)): #test every frame shift, moving forward by 1
+        codon = rna_sequence.upper()[i:i+3]#capitilize rna_sequence, and create codons
+        if codon == "AUG":#search for start codon
+            seq = rna_sequence.upper()[i:]#capitilize rna_sequence, make new sequence beginning at i position
+            str = translate_sequence(seq, genetic_code)#call translate_sequence function using new sequence 
+            list.append(str)#append the output of the trnaslate_sequence funtion totthe list
+    return(list)
 
 def get_reverse(sequence):
     """Reverse orientation of `sequence`.
